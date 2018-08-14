@@ -1,0 +1,29 @@
+#aboutMeBody{
+    background-image: url("../images/wheel.jpg");
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+#nav {
+    font-family: 'Times New Roman', Times, serif;
+    background-color: violet;
+    position: sticky;
+}
+
+#intro {
+    position: absolute;
+    
+    width: 500px;
+    height: 200px;
+    padding: 20px;
+
+    top: 25%;
+    bottom: 25%;
+    right:50%;
+    left: 25%;
+
+    font-family: 'Times New Roman', Times, serif;
+    overflow: auto;
+    text-align: center;
+    border: 1px solid black;
+}
