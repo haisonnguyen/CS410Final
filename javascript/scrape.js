@@ -2,36 +2,13 @@
 
 const snoowrap = require('snoowrap');
 const moment = require('moment');
-const express = require('express');
-
-var server = express();
-
-server.get('/', (req, res)=> {
-  res.set('Content-Type', 'text/html');
-  res.status(200).send("<!DOCTYPE html><html><body>Welcome</body></html>");
-})
-server.get('/top', (req, res) => {
-
-  res.set('Content-Type', 'text/html');
-  res.status(200).send("<!DOCTYPE html><html><body>lorem ipsom</body></html>");
-});
-
-server.listen(process.env.PORT || 8080);
-
-
-
-
-
-
-
-
-
-
-
-
 
 // anytime you request ANYTHING from reddit please use await
-async function run(){
+module.exports = {
+  run: run
+}
+
+async function run(desired){
 
 const r = new snoowrap({
   userAgent: 'scraper',
@@ -43,28 +20,48 @@ const r = new snoowrap({
 
 // Grabs subreddit by name
 const sub = r.getSubreddit('funny');
-// Grabs top posts
-const top = await sub.getTop();
-// Grabs first post
-const first = top[0];
+var result;
 
+if(desired == "top"){
+// Grabs top posts
+  result = await sub.getTop();
+}
+else if(desired == "hot"){
+  result = await sub.getHot();
+}
+else if(desired == "new"){
+  result = await sub.getNew();
+
+}
+else if(desired =="controversial"){
+  result = await sub.getControversial();
+
+}
+else if(desired == "rising"){
+  result = await sub.getRising();
+}
+else 
+  return ;
+
+// Grabs first post
+const first = result[0];
 var body = {};
+
+if(first.media) {
+  body.vidurl = first.media.reddit_video.fallback_url;
+}
 
 body.title = first.title;
 body.ups = first.ups;
 body.permalink = first.permalink;
 body.url = first.url;
 body.created_utc = first.created_utc;
-body.author = first.author.name;
+body.author = "/u/" + first.author.name;
 body.moment = moment.unix(first.created_utc).format('MMMM Do YYYY, h:mm:ss a');
-
 var jzon = JSON.stringify( body);
-console.log(body);
-console.log("------------");
-
+return body
 }
 
-// run().catch(console.error);
 
 
  // Build Snoowrap and client

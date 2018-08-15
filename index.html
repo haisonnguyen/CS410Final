@@ -14,15 +14,51 @@
     <link rel="stylesheet" href="./css/style.css">
     <title>Project</title>
 </head>
+
 <body>
-    <button id="submit">Submit</button>
+    <button id="hot" formaction="/hot">hot</button>
+    <button id="new" formaction="/new">new</button>
+    <button id="controversial" formaction="/controversial">controversial</button>
+    <button id="top" formaction="/top">top</button>
+    <button id="rising" formaction="/rising">rising</button>
+
 
     <div id="output">
-        <h1 id="title">Title</h1>
-        <div id="url">Url</div>
+        <h1 id="title">{{title}}</h1>
+        <div id="author">{{author}}</div>
+        <div id="permalink">{{permalink}}</div>
+        <div id="ups">{{ups}}</div>
+        <div id="url">{{url}}</div>
+        <br>
+        {{vidurl}}
     </div>
-	<script type="text/javascript" src="./javascript/scrape.js"></script>
-    </body>
+
+    <script type="text/javascript" src="./javascript/scrape.js"></script>
+    <script type="text/javascript">
+
+        var home = "http://localhost:8080/"
+        jQuery("#top").on("click", () => {
+            location.href = home + "top";
+        });
+
+        jQuery("#hot").on("click", () => {
+            location.href = home + "hot";
+        });
+
+        jQuery("#new").on("click", () => {
+            location.href = home + "new";
+        });
+
+        jQuery("#controversial").on("click", () => {
+            location.href = home + "controversial";
+        });
+
+        jQuery("#rising").on("click", () => {
+            location.href = home + "rising";
+        });
+
+    </script>
+</body>
 
 
 </html>
