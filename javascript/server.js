@@ -12,9 +12,9 @@ server.use(express.static(__dirname));
 var text = "lit";
 
 // grabs the "template" from index.html for rendering :)
-fs.readFile("../index.html", function (err, html) {
+fs.readFile("../templates/displaytemplate.html", function (err, html) {
   if (err) console.log(err);
-  console.log("Finished reading index.html");
+  console.log("Finished reading template");
   text = html.toString('utf8');
 });
 
@@ -28,7 +28,7 @@ server.get('/', (req, res) => {
 server.get('/hot', async (req, res) => {
 
   // grabs object data to display from scrape.js
-  var str = await bd.run("hot");
+  var str = await bd.run(req.url.slice(1));
 
   res.set('Content-Type', 'text/html');
   res.write(mustache.render(text, str));
@@ -39,7 +39,7 @@ server.get('/hot', async (req, res) => {
 server.get('/new', async (req, res) => {
 
   // grabs object data to display from scrape.js
-  var str = await bd.run("new");
+  var str = await bd.run(req.url.slice(1));
 
   res.set('Content-Type', 'text/html');
   res.write(mustache.render(text, str));
@@ -49,8 +49,9 @@ server.get('/new', async (req, res) => {
 // serve controversial
 server.get('/controversial', async (req, res) => {
 
+  console.log(req.url.slice(1))
   // grabs object data to display from scrape.js
-  var str = await bd.run("controversial");
+  var str = await bd.run(req.url.slice(1));
 
   res.set('Content-Type', 'text/html');
   res.write(mustache.render(text, str));
@@ -61,7 +62,7 @@ server.get('/controversial', async (req, res) => {
 server.get('/top', async (req, res) => {
 
   // grabs object data to display from scrape.js
-  var str = await bd.run("top");
+  var str = await bd.run(req.url.slice(1));
 
   res.set('Content-Type', 'text/html');
   res.write(mustache.render(text, str));
@@ -72,7 +73,7 @@ server.get('/top', async (req, res) => {
 server.get('/rising', async (req, res) => {
 
   // grabs object data to display from scrape.js
-  var str = await bd.run("rising");
+  var str = await bd.run(req.url.slice(1));
 
   res.set('Content-Type', 'text/html');
   res.write(mustache.render(text, str));
