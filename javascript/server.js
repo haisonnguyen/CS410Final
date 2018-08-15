@@ -9,7 +9,6 @@ var jQuery = require('jquery');
 
 server.use(express.static(__dirname));
 
-//server.use(express.static(__dirname + "/../public"));
 var text = "lit";
 
 // grabs the "template" from index.html for rendering :)
