@@ -14,9 +14,9 @@
     <title>Project</title>
 
     <style type="text/css">
-       * {
-        font-family: 'Courier New', Courier, monospace
-       }
+        * {
+            font-family: 'Courier New', Courier, monospace
+        }
     </style>
 </head>
 
@@ -27,27 +27,16 @@
     <button id="top" class="btn btn-primary" formaction="/top">top</button>
     <button id="rising" class="btn btn-primary" formaction="/rising">rising</button>
 
+    <ul id="output">
 
-    <div id="output">
-        <h6 id="title" class="font-weight-bold">{{title}}</h1>
-        <div id="author">posted by <a href="https://www.reddit.com{{author}}">{{author}}</a> </div>
-        <div id="permalink"><a href="https://www.reddit.com{{permalink}}">click me fam</a></div>
-        <div id="ups"><span class="fas fa-arrow-up"></span>votes : {{ups}}</div>
-        <div id="url">url :{{url}}</div>
-        <br>
-        {{#vidurl}}
-        <video controls width="200" height="200" id="vid"><source src="{{vidurl}}"></video>
-        {{/vidurl}}
-        {{^vidurl}}
-        {{/vidurl}}
-    </div>
+    </ul>
 
     <script type="text/javascript" src="./javascript/scrape.js"></script>
     <script type="text/javascript">
 
         var home = "http://localhost:8080/"
         jQuery("#top").on("click", (e) => {
-            console.log(e.target.id );
+            console.log(e.target.id);
             location.href = home + e.target.id;
         });
 
