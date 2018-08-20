@@ -21,10 +21,10 @@ fs.readFile("../../templates/displaytemplate.html", function (err, html) {
 
 server.get("/:param", async (req, res) => {
   // returns array
-
   var str = await bd.run(req.params.param);
 
   if (str) {
+    // passed in from scrape.js, parse JSON obj to render as the view for the template
     str = await JSON.parse(str);
     res.writeHeader(200, { "Content-Type": "text/html" });
     res.write(mustache.render(template, str));

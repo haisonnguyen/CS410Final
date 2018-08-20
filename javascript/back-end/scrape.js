@@ -23,7 +23,6 @@ async function run(desired) {
   var result;
 
   if (desired == "top") {
-    // Grabs top posts
     result = await sub.getTop({ limit: 50 });
   }
   else if (desired == "hot") {
@@ -31,11 +30,9 @@ async function run(desired) {
   }
   else if (desired == "new") {
     result = await sub.getNew({ limit: 50 });
-
   }
   else if (desired == "controversial") {
     result = await sub.getControversial({ limit: 50 });
-
   }
   else if (desired == "rising") {
     result = await sub.getRising({ limit: 50 });
@@ -50,6 +47,7 @@ async function run(desired) {
 
     // if it is a video
     if (result[i].media) {
+      // if it is a youtube video
       if (result[i].media.oembed) {
         var index = result[i].media.oembed.html.indexOf("class");
         var toAdd = 'id="yt-vid" ';
@@ -58,12 +56,14 @@ async function run(desired) {
         console.log(post.html);
       }
       else
-        post.vidurl = result[i].media.reddit_video.fallback_url;
+        post.vidurl = result[i].media.reddit_video.fallback_url; //regular video
     }
-
+    // if it is a picture
     if (result[i].url.endsWith("jpg") || result[i].url.endsWith("png") || result[i].url.endsWith("gif")) {
       post.image = result[i].url;
     }
+
+    // copy desired info over
     post.title = result[i].title;
     post.ups = result[i].ups;
     post.permalink = result[i].permalink;
@@ -71,11 +71,11 @@ async function run(desired) {
     post.created_utc = result[i].created_utc;
     post.author = "/u/" + result[i].author.name;
     post.moment = moment.unix(result[i].created_utc).format('MMMM Do YYYY, h:mm:ss a');
-    //post = { "post": post }
     array.push(post);
   }
-  // return JSON.stringify(array);
+
   var obj = { "listings": array };
+  // sending a JSON obj is better than a obj
   return JSON.stringify(obj);
 }
 

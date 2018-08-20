@@ -1,29 +1,54 @@
-#aboutMeBody{
-    background-image: url("../images/wheel.jpg");
-    background-size: cover;
-    background-repeat: no-repeat;
+* {
+    font-family: 'Courier New', Courier, monospace;
+    color: #ffffff;
 }
 
-#nav {
-    font-family: 'Times New Roman', Times, serif;
-    background-color: violet;
-    position: sticky;
+.row {
+    height: 500px;
 }
 
-#intro {
-    position: absolute;
-    
-    width: 500px;
-    height: 200px;
-    padding: 20px;
+.listing {
+    border-radius: 10px;
+    width: auto;
+    background-color: darkslategray;
+    padding: 5px 5px;
+}
 
-    top: 25%;
-    bottom: 25%;
-    right:50%;
-    left: 25%;
+.container div.listing:hover {
+    color:#DDD;
+}
 
-    font-family: 'Times New Roman', Times, serif;
-    overflow: auto;
-    text-align: center;
-    border: 1px solid black;
+hr {
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+.container {
+    width: 600px;
+    height: 80%;
+}
+
+.image {
+    height: auto;
+}
+
+img {
+    border-radius: 10px;
+    max-width: 100%;
+    max-height: 100%;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+video {
+    max-width: 100%;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+body {
+    background-color: #000000;
+    margin-top: 75px;
 }
