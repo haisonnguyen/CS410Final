@@ -24,37 +24,46 @@ async function run(desired) {
 
   if (desired == "top") {
     // Grabs top posts
-    result = await sub.getTop({ limit: 3 });
+    result = await sub.getTop({ limit: 50 });
   }
   else if (desired == "hot") {
-    result = await sub.getHot({ limit: 3 });
+    result = await sub.getHot({ limit: 50 });
   }
   else if (desired == "new") {
-    result = await sub.getNew({ limit: 3 });
+    result = await sub.getNew({ limit: 50 });
 
   }
   else if (desired == "controversial") {
-    result = await sub.getControversial({ limit: 3 });
+    result = await sub.getControversial({ limit: 50 });
 
   }
   else if (desired == "rising") {
-    result = await sub.getRising({ limit: 3 });
+    result = await sub.getRising({ limit: 50 });
   }
   else
     return;
 
-  // Grabs first post
-  const first = result[0];
   var array = [];
-  var body;
 
   for (var i = 0; i < result.length; ++i) {
-    // if it is a video
-    if (result[i].media) {
-      post.vidurl = result[i].media.reddit_video.fallback_url;
-    }
     var post = {};
 
+    // if it is a video
+    if (result[i].media) {
+      if (result[i].media.oembed) {
+        var index = result[i].media.oembed.html.indexOf("class");
+        var toAdd = 'id="yt-vid" ';
+        post.html = result[i].media.oembed.html;
+        post.html = post.html.slice(0, index) + toAdd + post.html.slice(index);
+        console.log(post.html);
+      }
+      else
+        post.vidurl = result[i].media.reddit_video.fallback_url;
+    }
+
+    if (result[i].url.endsWith("jpg") || result[i].url.endsWith("png") || result[i].url.endsWith("gif")) {
+      post.image = result[i].url;
+    }
     post.title = result[i].title;
     post.ups = result[i].ups;
     post.permalink = result[i].permalink;
@@ -62,32 +71,13 @@ async function run(desired) {
     post.created_utc = result[i].created_utc;
     post.author = "/u/" + result[i].author.name;
     post.moment = moment.unix(result[i].created_utc).format('MMMM Do YYYY, h:mm:ss a');
-    post = { "post": post }
+    //post = { "post": post }
     array.push(post);
   }
   // return JSON.stringify(array);
-  return array;
+  var obj = { "listings": array };
+  return JSON.stringify(obj);
 }
-// //console.log(array);
-// // if it is a video
-// var post = {};
-
-// if (first.media) {
-//   post.vidurl = first.media.reddit_video.fallback_url;
-// }
-// post.title = first.title;
-// post.ups = first.ups;
-// post.permalink = first.permalink;
-// post.url = first.url;
-// post.created_utc = first.created_utc;
-// post.author = "/u/" + first.author.name;
-// post.moment = moment.unix(first.created_utc).format('MMMM Do YYYY, h:mm:ss a');
-// body = { "post": post }
-// var jzon = JSON.stringify(body);
-// return;
-
-
-
 
  // Build Snoowrap and client
 // const r = new snoowrap({

@@ -1,5 +1,6 @@
+{{#post}}
 <li>
-        {{#post}}
+  
         <h6 id="title" class="font-weight-bold">{{title}}
                 </h1>
                 <div id="author">posted by <a href="https://www.reddit.com{{author}}">{{author}}</a> </div>
@@ -13,7 +14,10 @@
                 {{/vidurl}} 
                 {{^vidurl}} 
                 {{/vidurl}} 
-                {{/post}} 
-                {{^post}}
-                 {{/post}}
+ 
 </li>
+{{/post}}
+
+{{^post}}
+<br>none
+{{/post}}

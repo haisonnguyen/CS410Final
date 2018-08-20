@@ -8,54 +8,167 @@
 
     <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
 
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB"
-        crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.0/css/bootstrap.min.css"
+    />
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.0/js/bootstrap.min.js"></script>
     <title>Project</title>
 
     <style type="text/css">
         * {
-            font-family: 'Courier New', Courier, monospace
+            font-family: 'Courier New', Courier, monospace;
+            color: #ffffff;
+        }
+
+        .row {
+            height: 500px;
+        }
+
+        .listing {
+            border-radius: 10px;
+            width: auto;
+            background-color: darkslategray;
+            padding: 5px 5px;
+        }
+
+        .container div.listing:hover {
+            color:#DDD;
+
+        }
+
+        hr {
+            margin-top: 5px;
+            margin-bottom: 5px;
+        }
+
+        .container {
+            width: 600px;
+            height: 80%;
+        }
+
+        .image {
+            height: auto;
+        }
+
+        img {
+            border-radius: 10px;
+            max-width: 100%;
+            max-height: 100%;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        video {
+            max-width: 100%;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        body {
+            background-color: #000000;
+            margin-top: 75px;
         }
     </style>
 </head>
 
 <body>
-    <button id="hot" class="btn btn-primary" formaction="/hot">hot</button>
-    <button id="new" class="btn btn-primary" formaction="/new">new</button>
-    <button id="controversial" class="btn btn-primary" formaction="/controversial">controversial</button>
-    <button id="top" class="btn btn-primary" formaction="/top">top</button>
-    <button id="rising" class="btn btn-primary" formaction="/rising">rising</button>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
+        <a class="navbar-brand" href="#">Navbar</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+            aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
 
-    <ul id="output">
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" href="#">Home
+                        <span class="sr-only">(current)</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Link</a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true"
+                        aria-expanded="false">
+                        filters
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a id="hot" class="dropdown-item" href="#">hot</a>
+                        <a id="new" class="dropdown-item" href="#">new</a>
+                        <a id="top" class="dropdown-item" href="#">top</a>
+                        <a id="rising" class="dropdown-item" href="#">rising</a>
+                        <a id="controversial" class="dropdown-item" href="#">controversial</a>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </nav>
 
-    </ul>
+    <div class="container">
+        <hr> {{#listings}}
+
+        <div class="listing col">
+            <div class="content">
+
+                <h6 class="title row-md-6" class="font-weight-bold">{{title}}</h1>
+                    <div class="author ">posted
+                        <a href="https://www.reddit.com{{author}}">{{author}}</a>
+                    </div>
+                    <div class="permalink row-md-6">
+                        <a href="https://www.reddit.com{{permalink}}">Go to Reddit post</a>
+                    </div>
+                    <div class="ups row-md-6">
+                        <span class="fas fa-arrow-up row-md-6"></span>votes: {{ups}}</div>
+
+                    {{#image}}
+                    <div class="image">
+                        <img src="{{image}}" alt="LIT">
+                    </div>
+
+
+                    {{/image}} {{#vidurl}}
+                    <video controls class="vid row-md-6">
+                        <source src="{{vidurl}}">
+                    </video>
+                    {{/vidurl}} {{^vidurl}} {{/vidurl}}
+                    <!-- {{#html}}
+                    <iframe> {{html}}</iframe>
+                    {{/html}}
+                    {{^html}}
+                    {{/html}} -->
+
+            </div>
+        </div>
+        <hr> {{/listings}} {{^listings}}
+        <br> no list {{/listings}}
+    </div>
 
     <script type="text/javascript" src="./javascript/scrape.js"></script>
     <script type="text/javascript">
 
-        var home = "http://localhost:8080/"
         jQuery("#top").on("click", (e) => {
             console.log(e.target.id);
-            location.href = home + e.target.id;
+            location.href = location.origin + "/" + e.target.id;
         });
 
         jQuery("#hot").on("click", (e) => {
-            location.href = home + e.target.id;
+            location.href = location.origin + "/" + e.target.id;
         });
 
         jQuery("#new").on("click", (e) => {
-            location.href = home + e.target.id;
+            location.href = location.origin + "/" + e.target.id;
         });
 
         jQuery("#controversial").on("click", (e) => {
-            location.href = home + e.target.id;
+            location.href = location.origin + "/" + e.target.id;
         });
 
         jQuery("#rising").on("click", (e) => {
-            location.href = home + e.target.id;
+            location.href = location.origin + "/" + e.target.id;
         });
-
     </script>
 </body>
 
